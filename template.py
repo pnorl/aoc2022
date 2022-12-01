@@ -1,7 +1,7 @@
-def part1(lines):
+def part1(data):
     return "not solved"
 
-def part2(lines):
+def part2(data):
     return "not solved"
 
 def format_input(filename):
@@ -9,9 +9,9 @@ def format_input(filename):
     return lines
 
 def main():
-    lines = format_input("0.in")
-    print("part1", part1(lines))
-    print("part2", part2(lines))
+    data = format_input("0.in")
+    print("part1", part1(data))
+    print("part2", part2(data))
 
 if __name__ == '__main__':
     main()
