@@ -1,36 +1,35 @@
-# A, X = Rock, B, Y = Paper, C, Z = Scissors
-# X = loose, Y = draw, Z = win
-weapon_scores = {"A": 1, "B": 2, "C" : 3, "X": 1, "Y": 2, "Z" : 3}
-beats = {"X": "C", "Y": "A", "Z": "B", "A": "Z", "B": "X", "C": "Y"}
-beaten_by = {"A": "Y", "B": "Z", "C": "X"}
-def score(his, my):
-    weapon_score = weapon_scores[my]
-    win_score = 0
-    if weapon_scores[my] == weapon_scores[his]:
-        win_score = 3
-    elif (beats[my] == his):
-        win_score = 6
-    return weapon_score + win_score
+ROCK, PAPER, SCISSORS = 1,2,3
+LOSE, DRAW, WIN = 0, 3, 6
 
-def score_2(his, outcome):
-    my = None
-    win_score = 0
-    if outcome == "X":
-        my = beats[his]
-        win_score = 0
-    elif outcome == "Y":
-        my = chr(ord(his) + 23)
-        win_score = 3
+beats = {ROCK: SCISSORS, PAPER: ROCK, SCISSORS: PAPER}
+beaten_by = {ROCK: PAPER, PAPER: SCISSORS, SCISSORS: ROCK}
+
+# A, X = Rock, B, Y = Paper, C, Z = Scissors
+action_map = {"X": ROCK, "Y": PAPER, "Z": SCISSORS, "A": ROCK, "B": PAPER, "C": SCISSORS}
+# X = loose, Y = draw, Z = win
+outcome_map = {"X": LOSE, "Y": DRAW, "Z": WIN}
+            
+def score(their, my):
+    if beats[my] == their:
+        return my + WIN
+    elif my == their:
+        return my + DRAW
     else:
-        my = beaten_by[his]
-        win_score = 6
-    return weapon_scores[my] + win_score    
+        return my
+
+def score_with_outcome(their, result):
+    if result == LOSE:
+        return beats[their]
+    elif result == DRAW:
+        return their + DRAW
+    else:
+        return beaten_by[their] + WIN
 
 def part1(data):
-    return sum([int(score(x[0], x[1])) for x in data])
+    return sum([score(action_map[their], action_map[my]) for their, my in data])
 
 def part2(data):
-    return sum([int(score_2(x[0], x[1])) for x in data])
+    return sum([int(score_with_outcome(action_map[their], outcome_map[result])) for their, result in data])
 
 def format_input(filename):
     lines = open(filename).read().splitlines()
