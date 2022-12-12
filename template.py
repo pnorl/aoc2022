@@ -9,7 +9,7 @@ def format_input(filename):
     return lines
 
 def main():
-    data = format_input("0.in")
+    data = format_input("input.in")
     print("part1", part1(data))
     print("part2", part2(data))
 
